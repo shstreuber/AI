@@ -1,0 +1,61 @@
+Simple one-neuron network to learn logical AND.
+
+Inputs:  1 = true,  0 = false.
+Truth table data:
+ 
+  x1  x2  Y=x1 and x2
+  --------------------
+   0   0   0
+   1   0   0
+   0   1   0
+   1   1   1
+   
+ One neuron neural network with 2 inputs x1 and x2:
+ 
+input  weight
+  x1 --> w1 --> (x1*w1)
+                   \
+      Neuron:    (if sum >= 0.2 Y = 1, else 0) -> Y out
+                   /
+  x2 --> w2 --> (x2*w2)
+  
+  Start with some random values in the range (-.5, +.5)
+    w1 =  0.3
+    w2 = -0.1
+    threshhold for crisp-ifying output: >=0.2
+ 
+ How do we train this network? How does it 'learn'?
+ 
+ In this exercise will present the network with the values
+ to train it.
+ 
+ One "epoch" is one pass through the all the input data 
+ (the four cases in the truth table above).
+ 
+ We present the network with some test data. 
+ -- If the output is correct, then nothing to learn.
+ -- If the output is wrong, we will nudge the weights in
+    a direction to help the network emit the correct value.
+ 
+ If the output was an error, the 'nudge' adjustement: 
+     0.1 * error
+     
+This nudge adjustment is applied according to how much
+each input xi contributed to the erroneous output. 
+ 
+ So if input xi is 0,
+     then it contributed nothing to the sum, 
+     and t weight doesn't change
+
+if input i is 1
+     it contributed 1 * wi to the sum
+     which we want to nudge back to where it belongs
+     so we add or subtract the nudge to the weight wi
+
+(More generally, if the xi input were 0.3, we would adjust 
+the weight for xi by 0.3 * the nudge. The stronger inputs 
+contributed more to the error output, so their weights get
+stronger adjustment.)
+
+One 'epoch' of training is running through the test data
+one time.
